@@ -4,9 +4,9 @@ pragma solidity =0.6.12;
 
 import './libraries/SafeMath.sol';
 
-// Jackrabbit ERC20 contract -JRT
-contract JackrabbitV2ERC20 {
-    using SafeMathJackrabbit for uint;
+// Coffhee ERC20 contract -JRT
+contract CoffheeERC20 {
+    using SafeMathCoffee for uint;
 
     string public constant name = 'COF LP';
     string public constant symbol = 'COF LP';
@@ -81,7 +81,7 @@ contract JackrabbitV2ERC20 {
     }
 
     function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external {
-        require(deadline >= block.timestamp, 'JackrabbitV2: EXPIRED');
+        require(deadline >= block.timestamp, 'CoffheeV2: EXPIRED');
         bytes32 digest = keccak256(
             abi.encodePacked(
                 '\x19\x01',
