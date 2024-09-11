@@ -2,18 +2,18 @@
 
 pragma solidity >=0.5.0;
 
-import '../interfaces/IJackrabbitV2Pair.sol';
+import '../interfaces/ICoffheeV2Pair.sol';
 
 import "./SafeMath.sol";
 
-library JackrabbitV2Library {
-    using SafeMathJackrabbit for uint;
+library CoffheeV2Library {
+    using SafeMathCoffhee for uint;
 
     // returns sorted token addresses, used to handle return values from pairs sorted in this order
     function sortTokens(address tokenA, address tokenB) internal pure returns (address token0, address token1) {
-        require(tokenA != tokenB, 'JackrabbitV2Library: IDENTICAL_ADDRESSES');
+        require(tokenA != tokenB, 'CoffheeV2Library: IDENTICAL_ADDRESSES');
         (token0, token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
-        require(token0 != address(0), 'JackrabbitV2Library: ZERO_ADDRESS');
+        require(token0 != address(0), 'CoffheeV2Library: ZERO_ADDRESS');
     }
 
     // calculates the CREATE2 address for a pair without making any external calls
@@ -36,15 +36,15 @@ library JackrabbitV2Library {
 
     // given some amount of an asset and pair reserves, returns an equivalent amount of the other asset
     function quote(uint amountA, uint reserveA, uint reserveB) internal pure returns (uint amountB) {
-        require(amountA > 0, 'JackrabbitV2Library: INSUFFICIENT_AMOUNT');
-        require(reserveA > 0 && reserveB > 0, 'JackrabbitV2Library: INSUFFICIENT_LIQUIDITY');
+        require(amountA > 0, 'CoffheeV2Library: INSUFFICIENT_AMOUNT');
+        require(reserveA > 0 && reserveB > 0, 'CoffheeV2Library: INSUFFICIENT_LIQUIDITY');
         amountB = amountA.mul(reserveB) / reserveA;
     }
 
     // given an input amount of an asset and pair reserves, returns the maximum output amount of the other asset
     function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) internal pure returns (uint amountOut) {
-        require(amountIn > 0, 'JackrabbitV2Library: INSUFFICIENT_INPUT_AMOUNT');
-        require(reserveIn > 0 && reserveOut > 0, 'JackrabbitV2Library: INSUFFICIENT_LIQUIDITY');
+        require(amountIn > 0, 'CoffheeV2Library: INSUFFICIENT_INPUT_AMOUNT');
+        require(reserveIn > 0 && reserveOut > 0, 'CoffheeV2Library: INSUFFICIENT_LIQUIDITY');
         uint amountInWithFee = amountIn.mul(9975);
         uint numerator = amountInWithFee.mul(reserveOut);
         uint denominator = reserveIn.mul(10000).add(amountInWithFee);
@@ -53,8 +53,8 @@ library JackrabbitV2Library {
 
     // given an output amount of an asset and pair reserves, returns a required input amount of the other asset
     function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut) internal pure returns (uint amountIn) {
-        require(amountOut > 0, 'JackrabbitV2Library: INSUFFICIENT_OUTPUT_AMOUNT');
-        require(reserveIn > 0 && reserveOut > 0, 'JackrabbitV2Library: INSUFFICIENT_LIQUIDITY');
+        require(amountOut > 0, 'CoffheeV2Library: INSUFFICIENT_OUTPUT_AMOUNT');
+        require(reserveIn > 0 && reserveOut > 0, 'CoffheeV2Library: INSUFFICIENT_LIQUIDITY');
         uint numerator = reserveIn.mul(amountOut).mul(10000);
         uint denominator = reserveOut.sub(amountOut).mul(9975);
         amountIn = (numerator / denominator).add(1);
@@ -62,7 +62,7 @@ library JackrabbitV2Library {
 
     // performs chained getAmountOut calculations on any number of pairs
     function getAmountsOut(address factory, uint amountIn, address[] memory path) internal view returns (uint[] memory amounts) {
-        require(path.length >= 2, 'JackrabbitV2Library: INVALID_PATH');
+        require(path.length >= 2, 'CoffheeV2Library: INVALID_PATH');
         amounts = new uint[](path.length);
         amounts[0] = amountIn;
         for (uint i; i < path.length - 1; i++) {
@@ -73,7 +73,7 @@ library JackrabbitV2Library {
 
     // performs chained getAmountIn calculations on any number of pairs
     function getAmountsIn(address factory, uint amountOut, address[] memory path) internal view returns (uint[] memory amounts) {
-        require(path.length >= 2, 'JackrabbitV2Library: INVALID_PATH');
+        require(path.length >= 2, 'CoffheeV2Library: INVALID_PATH');
         amounts = new uint[](path.length);
         amounts[amounts.length - 1] = amountOut;
         for (uint i = path.length - 1; i > 0; i--) {
