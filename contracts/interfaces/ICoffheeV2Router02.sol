@@ -4,7 +4,7 @@ pragma solidity >=0.6.2;
 
 import './ICoffheeV2Router01.sol';
 
-interface ICoffheeV2Router02 is IJackrabbitV2Router01 {
+interface ICoffheeV2Router02 is ICoffheeV2Router01 {
     function removeLiquidityETHSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
