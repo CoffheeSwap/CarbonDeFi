@@ -2,7 +2,7 @@
 
 pragma solidity >=0.5.0;
 
-interface IJackrabbitV2ERC20 {
+interface ICoffheeV2ERC20 {
     event Approval(address indexed owner, address indexed spender, uint value);
     event Transfer(address indexed from, address indexed to, uint value);
 
